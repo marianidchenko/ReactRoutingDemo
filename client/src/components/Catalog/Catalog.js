@@ -8,8 +8,6 @@ export const Catalog = ({ games }) => {
                 ? games.map(game => <CatalogItem game={game} key={games._id}/>)
                 : <h3 className="no-articles">No articles yet</h3>
             }
-
-
         </section >
     );
 }
