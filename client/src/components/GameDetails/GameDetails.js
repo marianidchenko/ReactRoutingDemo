@@ -8,6 +8,11 @@ export const GameDetails = ({ games, addComment }) => {
         comment: '',
     });
 
+    const [error, setError] = useState({
+        username: '',
+        comment: '',
+    })
+
     const game = games.find(game => game._id === gameId)
 
     const addCommentHandler = (e) => {
@@ -20,6 +25,38 @@ export const GameDetails = ({ games, addComment }) => {
             ...state,
             [e.target.name]: e.target.value
         }));
+    }
+
+    const validateUsername = (e) => {
+        const username = e.target.value;
+        if (username.length < 3) {
+            setError(state => ({
+                ...state,
+                'username': 'Username must be at least 3 characters long'
+            }))
+        }
+        else {
+            setError(state => ({
+                ...state,
+                'username': ''
+            }))
+        };
+    }
+
+    const validateComment = (e) => {
+        const comment = e.target.value;
+        if (comment.length < 5) {
+            setError(state => ({
+                ...state,
+                'comment': 'Comment must be at least 5 characters long'
+            }))
+        }
+        else {
+            setError(state => ({
+                ...state,
+                'comment': ''
+            }))
+        };
     }
 
     return (
@@ -67,14 +104,22 @@ export const GameDetails = ({ games, addComment }) => {
                         type="text" name="username"
                         placeholder="Enter username"
                         onChange={onChange}
+                        onBlur={validateUsername}
                         value={comment.username}
                     />
+                    {error.username &&
+                        <span>{error.username}</span>
+                    }
                     <textarea
                         name="comment"
                         placeholder="Comment......"
                         onChange={onChange}
+                        onBlur={validateComment}
                         value={comment.comment}
                     />
+                    {error.comment &&
+                        <span>{error.comment}</span>
+                    }
                     <input
                         className="btn submit"
                         type="submit"
