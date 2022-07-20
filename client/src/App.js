@@ -17,16 +17,17 @@ function App() {
 
   const addComment = (gameId, comment) => {
     setGames(state => {
-      const game = state.find(game => game._id === gameId);
+      const game = state.find(x => x._id == gameId);
+
       const comments = game.comments || [];
-      comments.push(comment);
+      comments.push(comment)
 
       return [
-        ...state.filter(game => game._id !== gameId),
-        {...game, comments: comments}
-      ]
-    })
-  }
+        ...state.filter(x => x._id !== gameId),
+        { ...game, comments },
+      ];
+    });
+  };
 
   useEffect(() => {
     gameService.getAll()
@@ -41,12 +42,12 @@ function App() {
       {/* Main Content */}
       <main id="main-content">
         <Routes>
-          <Route path="/" component={Home} element={<Home games={games}/>} />
+          <Route path="/" component={Home} element={<Home games={games} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/create" element={<Create />} />
-          <Route path="/catalog" element={<Catalog games={games}/>} />
-          <Route path="/catalog/:gameId" element={<GameDetails games={games} addComment={addComment}/>} />
+          <Route path="/catalog" element={<Catalog games={games} />} />
+          <Route path="/catalog/:gameId" element={<GameDetails games={games} addComment={addComment} />} />
         </Routes>
       </main>
       {/*Home Page*/}
@@ -83,7 +84,7 @@ function App() {
         </form>
       </section> */}
       {/*Details Page*/}
-      
+
       {/* Catalogue */}
 
     </div>
