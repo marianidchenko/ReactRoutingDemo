@@ -1,6 +1,7 @@
 import './App.css';
 import { Header } from './components/Header/Header';
 import { Home } from './components/Home/Home';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
@@ -8,7 +9,9 @@ function App() {
       <Header />
       {/* Main Content */}
       <main id="main-content">
-        <Home />
+        <Routes>
+          <Route path="/" component={Home} element={<Home />} />
+        </Routes>
       </main>
       {/*Home Page*/}
 
