@@ -1,4 +1,4 @@
-export const Register = () => {
+const Register = () => {
     return (
         <section id="register-page" className="content auth">
             <form id="register">
@@ -27,3 +27,5 @@ export const Register = () => {
         </section>
     );
 }
+
+export default Register;
