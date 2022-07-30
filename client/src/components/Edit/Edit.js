@@ -1,12 +1,23 @@
 import { useContext, useEffect, useState } from "react"
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { GameContext } from "../../contexts/GameContext"
 import * as gameService from "../../services/gameService";
 
 export const Edit = () => {
     const [currentGame, setCurrentGame] = useState({});
-    const {} = useContext(GameContext);
+    const { gameEdit } = useContext(GameContext);
     const { gameId } = useParams();
+    const navigate = useNavigate();
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        const gameData = Object.fromEntries(new FormData(e.target));
+        gameService.edit(gameId, gameData)
+          .then(result => {
+            gameEdit(gameId, result)
+            navigate(`/catalog/${result._id}`)
+          })
+      }
 
     useEffect(() => {
         gameService.getOne(gameId)
@@ -18,7 +29,7 @@ export const Edit = () => {
 
     return (
         <section id="edit-page" className="auth">
-            <form id="edit">
+            <form id="edit" onSubmit={onSubmit}>
                 <div className="container">
                     <h1>Edit Game</h1>
                     <label htmlFor="leg-title">Legendary title:</label>
