@@ -9,7 +9,7 @@ const request = async (method, url, data) => {
             headers: {
                 'content-type': 'application/json'
             },
-            data: JSON.stringify(data)
+            body: JSON.stringify(data)
           })  
         }
         const response = await buildRequest;
