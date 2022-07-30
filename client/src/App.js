@@ -12,6 +12,7 @@ import { Catalog } from './components/Catalog/Catalog';
 import { GameDetails } from './components/GameDetails/GameDetails';
 import { AuthContext } from './contexts/AuthContext';
 import { Logout } from './components/Logout/Logout.js';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 // import { Register } from './components/Register/Register';
 
@@ -20,7 +21,7 @@ const Register = lazy(() => import('./components/Register/Register'))
 function App() {
 
   const [games, setGames] = useState([]);
-  const [auth, setAuth] = useState({});
+  const [auth, setAuth] = useLocalStorage('auth', {});
   const navigate = useNavigate();
 
   const userLogin = (authData) => {
