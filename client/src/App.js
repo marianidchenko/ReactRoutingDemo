@@ -11,8 +11,10 @@ import { Create } from './components/Create/Create';
 import { Catalog } from './components/Catalog/Catalog';
 import { GameDetails } from './components/GameDetails/GameDetails';
 import { AuthContext } from './contexts/AuthContext';
+import { GameContext } from './contexts/GameContext';
 import { Logout } from './components/Logout/Logout.js';
 import { useLocalStorage } from './hooks/useLocalStorage';
+import { Edit } from './components/Edit/Edit';
 
 // import { Register } from './components/Register/Register';
 
@@ -46,12 +48,11 @@ function App() {
     });
   };
 
-  const addGame = (gameData) => {
+  const gameAdd = (gameData) => {
     setGames(state => [
       ...state,
       {
         ...gameData,
-        _id: uniqid(),
       }
     ]);
     navigate('/')
@@ -69,6 +70,7 @@ function App() {
       <div id="box">
         <Header />
         {/* Main Content */}
+        <GameContext.Provider value={{games, gameAdd}}>
         <main id="main-content">
           <Routes>
             <Route path="/" component={Home} element={<Home games={games} />} />
@@ -78,44 +80,15 @@ function App() {
                 <Register />
               </Suspense>} />
             <Route path="/logout" element={<Logout />}/>
-            <Route path="/create" element={<Create addGame={addGame} />} />
+            <Route path="/create" element={<Create />} />
+            <Route path="/games/:gameId/edit" element={<Edit />} />
             <Route path="/catalog" element={<Catalog games={games} />} />
             <Route path="/catalog/:gameId" element={<GameDetails games={games} addComment={addComment} />} />
           </Routes>
         </main>
-        {/*Home Page*/}
-
-        {/* Login Page ( Only for Guest users ) */}
-
-        {/* Register Page ( Only for Guest users ) */}
-
-        {/* Create Page ( Only for logged-in users ) */}
-
-        {/* Edit Page ( Only for the creator )*/}
-        {/* <section id="edit-page" className="auth">
-        <form id="edit">
-          <div className="container">
-            <h1>Edit Game</h1>
-            <label htmlFor="leg-title">Legendary title:</label>
-            <input type="text" id="title" name="title" defaultValue="" />
-            <label htmlFor="category">Category:</label>
-            <input type="text" id="category" name="category" defaultValue="" />
-            <label htmlFor="levels">MaxLevel:</label>
-            <input
-              type="number"
-              id="maxLevel"
-              name="maxLevel"
-              min={1}
-              defaultValue=""
-            />
-            <label htmlFor="game-img">Image:</label>
-            <input type="text" id="imageUrl" name="imageUrl" defaultValue="" />
-            <label htmlFor="summary">Summary:</label>
-            <textarea name="summary" id="summary" defaultValue={""} />
-            <input className="btn submit" type="submit" defaultValue="Edit Game" />
-          </div>
-        </form>
-      </section> */}
+        </GameContext.Provider>
+  
+        {/*  */}
         {/*Details Page*/}
 
         {/* Catalogue */}

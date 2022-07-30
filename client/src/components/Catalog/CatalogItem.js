@@ -10,6 +10,9 @@ export const CatalogItem = ({ game }) => {
                 <Link to={`/catalog/${game._id}`} className="details-button">
                     Details
                 </Link>
+                <Link to={`/games/${game._id}/edit`} className="details-button" style={{marginLeft: '150px'}}>
+                    Edit
+                </Link>
             </div>
         </div>
     );
